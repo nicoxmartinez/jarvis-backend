@@ -25,16 +25,16 @@ Exporta las claves de API en tu terminal antes de ejecutar el servidor:
 
 ```bash
 # URL de la API
-export SST_API_URL = "sst-api-url"
+export SST_API_URL="sst-api-url"
 
-# Clave para el servicio de Transcripción 
+# Clave para el servicio de transcripción 
 export SST_API_KEY="tu-clave"
 
 # Especificar modelo
 export SST_MODEL="nombre-del-modelo"
 
 # URL de la API
-export LLM_API_URL = "llm-api-url"
+export LLM_API_URL="llm-api-url"
 
 # Clave para el modelo de lenguaje 
 export LLM_API_KEY="tu-clave"
