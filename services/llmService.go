@@ -12,9 +12,9 @@ import (
 )
 
 func QueryLLM(userTranscript string) (*models.JarvisResponse, error) {
-	apiKey := os.Getenv("OPENROUTER_API_KEY")
-	modelName := os.Getenv("OPENROUTER_MODEL")
-	apiURL := data.LLM_API_URL
+	apiURL := os.Getenv("LLM_API_URL")
+	apiKey := os.Getenv("LLM_API_KEY")
+	modelName := os.Getenv("LLM_MODEL")
 
 	if apiKey == "" {
 		return &models.JarvisResponse{

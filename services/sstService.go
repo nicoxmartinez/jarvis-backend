@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"jarvis-backend/data"
 	"jarvis-backend/models"
 	"mime/multipart"
 	"net/http"
@@ -13,11 +12,12 @@ import (
 	"path/filepath"
 )
 
-// TranscribeAudio envía un archivo de audio a la API de Whisper y devuelve el texto transcrito
+// TranscribeAudio envía un archivo de audio a la API de SST y devuelve el texto transcrito
 func TranscribeAudio(filePath string) (string, error) {
-	apiURL := data.SST_API_URL
-	modelName := os.Getenv("OPENAI_MODEL")
-	apiKey := os.Getenv("OPENAI_API_KEY")
+	apiURL := os.Getenv("SST_API_URL")
+	apiKey := os.Getenv("SST_API_KEY")
+	modelName := os.Getenv("SST_MODEL")
+
 	if apiKey == "" {
 		return "API_KEY del SST no configurada.", nil
 	}
@@ -42,7 +42,7 @@ func TranscribeAudio(filePath string) (string, error) {
 
 	err = writer.WriteField("model", modelName)
 	if err != nil {
-		return "", fmt.Errorf("error escribiendo campo model: %w", err)
+		return "", fmt.Errorf("error escribiendo campo model: %s Error: %w", modelName, err)
 	}
 
 	// Forzar o sugerir que el idioma principal esperado
@@ -52,7 +52,7 @@ func TranscribeAudio(filePath string) (string, error) {
 
 	req, err := http.NewRequest("POST", apiURL, body)
 	if err != nil {
-		return "", fmt.Errorf("error creando petición Whisper: %w", err)
+		return "", fmt.Errorf("error creando petición a %s Error: %w", apiURL, err)
 	}
 
 	req.Header.Set("Content-Type", writer.FormDataContentType())
@@ -74,10 +74,10 @@ func TranscribeAudio(filePath string) (string, error) {
 		return "", fmt.Errorf("SST: error API  (status %d): %s", resp.StatusCode, string(respBody))
 	}
 
-	var whisperResponse models.WhisperResponse
-	if err := json.Unmarshal(respBody, &whisperResponse); err != nil {
-		return "", fmt.Errorf("error parseando respuesta JSON de Whisper: %w", err)
+	var sstResponse models.SstResponse
+	if err := json.Unmarshal(respBody, &sstResponse); err != nil {
+		return "", fmt.Errorf("error parseando respuesta JSON : %w", err)
 	}
 
-	return whisperResponse.Text, nil
+	return sstResponse.Text, nil
 }

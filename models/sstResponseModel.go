@@ -1,5 +1,5 @@
 package models
 
-type WhisperResponse struct {
+type SstResponse struct {
 	Text string `json:"text"`
 }
