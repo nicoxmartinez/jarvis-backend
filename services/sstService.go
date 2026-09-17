@@ -45,9 +45,6 @@ func TranscribeAudio(filePath string) (string, error) {
 		return "", fmt.Errorf("error escribiendo campo model: %s Error: %w", modelName, err)
 	}
 
-	// Forzar o sugerir que el idioma principal esperado
-	_ = writer.WriteField("language", "en")
-
 	writer.Close()
 
 	req, err := http.NewRequest("POST", apiURL, body)
