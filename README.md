@@ -1,11 +1,14 @@
 # J.A.R.V.I.S. English Tutor - Backend (Go)
+backend diseñado como un asistente de procesamiento de voz e inteligencia artificial en tiempo real. Su objetivo principal es recibir entradas de voz del usuario, convertirlas a texto mediante reconocimiento de voz, procesar el contexto con un modelo de lenguaje (LLM) y devolver una respuesta estructurada.
 
+NOTA: Almacenamiento temporal para archivos de audio entrantes (.wav) en la carpeta ``/uploads``
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
 - **Lenguaje:** Go (v1.24+)
 - **Servidor HTTP:** `net/http` (nativo de Go)
+- **Environment:** godotenv (v1.5.1) 
 - **STT API**
 - **LLM API**
 
@@ -13,37 +16,19 @@
 
 ## ⚙️ Configuración e Instalación
 
-### 1. Requisitos Previos
+### Requisitos Previos
 
 - Tener instalado **Go** (versión 1.20 o superior).
-- Cuenta y clave de API para la conversión de voz a texto.
 - Cuenta y clave de API para el modelo de lenguaje.
+- Cuenta y clave de API para la conversión de voz a texto.
 
-### 2. Variables de Entorno
-
-Exporta las claves de API en tu terminal antes de ejecutar el servidor:
+### Instalar dependencias
 
 ```bash
-# URL de la API
-export SST_API_URL="sst-api-url"
-
-# Clave para el servicio de transcripción 
-export SST_API_KEY="tu-clave"
-
-# Especificar modelo
-export SST_MODEL="nombre-del-modelo"
-
-# URL de la API
-export LLM_API_URL="llm-api-url"
-
-# Clave para el modelo de lenguaje 
-export LLM_API_KEY="tu-clave"
-
-# Especificar modelo
-export LLM_MODEL="nombre-del-modelo"
+go mod tidy
 ```
 
-### 3. Ejecución del Servidor
+### Ejecución del Servidor
 
 ```bash
 go run main.go

@@ -5,14 +5,21 @@ import (
 	"jarvis-backend/routers"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	port := ":8080"
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error cargando variables de entorno")
+	}
+	port := os.Getenv("PORT")
 
 	routers.SetServer()
-	fmt.Printf("Servidor J.A.R.V.I.S. escuchando en http://localhost%s\n", port)
-	if err := http.ListenAndServe(port, nil); err != nil {
+	fmt.Printf("Servidor J.A.R.V.I.S. escuchando en http://localhost:%s\n", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatalf("Error iniciando servidor: %v", err)
 	}
 }
